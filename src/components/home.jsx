@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {useState, useEffect} from "react";
+import "../App.css"
 
 function Home() {
 
@@ -8,24 +9,27 @@ const [currentWeather, setCurrentWeather] = useState("")
 const submitValue = () => {
     const weather = {
         'Insert a city' : cityWeather,
-    }
+    }}
+const url=`http://api.openweathermap.org/data/2.5/weather?q=${cityWeather},fr&units=metric&APPID=${process.env.REACT_APP_APIKEY}`
     // ${cityWeather}
-useEffect(()=> {fetch(`http://api.openweathermap.org/data/2.5/weather?q=paris,fr&APPID=ac4cb07e6f578cd6cb15563efd460410`)
-.then((res)=>res.json())
-.then((res)=>{
-    setCurrentWeather(res);
-    console.log(res);
-})})
-
+    useEffect(()=> {fetch(url)
+        .then((res)=>res.json())
+        .then((res)=>{
+            setCurrentWeather(res);
+            console.log(res);
+})},[])
+console.log(cityWeather);
     return (
       <div>
           <input type ="text" {...cityWeather} placeholder="Insert a city" onChange={e => setWeather(e.target.value)}/>
 
-          <button onClick={submitValue}></button>
-          <p>{currentWeather.main.temp}</p>
-          <p>{currentWeather.weather.icon}</p>
+          <button type="button" class="btn btn-outline-danger" onClick={submitValue}>
+              Search
+          </button>
+          <p>{(currentWeather?.main?.temp) }°C</p>
+          <img {...currentWeather?.weather?.icon}/>
       </div>
     )
 }
-}
+
 export default Home;
