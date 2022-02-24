@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext, Component} from "react";
 import "../App.css"
+export const FavoriteContext = createContext(defaultValue);
 
 function Home() {
 
@@ -17,9 +17,11 @@ const url=`http://api.openweathermap.org/data/2.5/weather?q=${cityWeather},fr&un
         .then((res)=>{
             setCurrentWeather(res);
             console.log(res);
+            console.log(cityWeather);
 })},[])
-console.log(cityWeather);
+
     return (
+        <FavoriteContext.Provider value={favorite}>
       <div>
           <input type ="text" {...cityWeather} placeholder="Insert a city" onChange={e => setWeather(e.target.value)}/>
 
@@ -27,8 +29,9 @@ console.log(cityWeather);
               Search
           </button>
           <p>{(currentWeather?.main?.temp) }°C</p>
-          <img {...currentWeather?.weather?.icon}/>
+         
       </div>
+      </FavoriteContext.Provider>
     )
 }
 

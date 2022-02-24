@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
-import Favorites from "./components/favorites.jsx"
+import Favorites from "./pages/favorites.jsx"
 import Footer from "./components/footer.jsx"
 import Navbar from "./components/navbar.jsx"
-import Home from "./components/home.jsx"
+import Home from "./pages/home.jsx"
 import {useState, useEffect} from "react";
 
 function App() {
