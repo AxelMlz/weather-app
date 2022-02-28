@@ -1,17 +1,27 @@
 import React, {useState, useEffect, useContext, Component} from "react";
 import "../App.css"
-export const FavoriteContext = createContext(defaultValue);
+import CityWeatherCard from "../components/cityWeatherCard.jsx"
+import { FavoriteContext} from '../context/FavoriteContext.jsx'
+
 
 function Home() {
 
-const [cityWeather, setWeather] = useState("")
+const contextType = useContext(FavoriteContext);
+const [cityWeather, setWeather] = useState("Paris")
 const [currentWeather, setCurrentWeather] = useState("")
+const [weatherInfos, setWeatherInfos] = useState(<></>)
+
+function updateCity(e){
+   return setWeather(e.target.value)
+}
 const submitValue = () => {
     const weather = {
         'Insert a city' : cityWeather,
     }}
+
+    
 const url=`http://api.openweathermap.org/data/2.5/weather?q=${cityWeather},fr&units=metric&APPID=${process.env.REACT_APP_APIKEY}`
-    // ${cityWeather}
+
     useEffect(()=> {fetch(url)
         .then((res)=>res.json())
         .then((res)=>{
@@ -21,17 +31,18 @@ const url=`http://api.openweathermap.org/data/2.5/weather?q=${cityWeather},fr&un
 })},[])
 
     return (
-        <FavoriteContext.Provider value={favorite}>
+     
       <div>
-          <input type ="text" {...cityWeather} placeholder="Insert a city" onChange={e => setWeather(e.target.value)}/>
+          <input type ="text" {...cityWeather} placeholder="Insert a city" onChange={updateCity()}/>
 
           <button type="button" class="btn btn-outline-danger" onClick={submitValue}>
               Search
           </button>
-          <p>{(currentWeather?.main?.temp) }°C</p>
-         
+{/*           
+        //   return(<p>{(currentWeather?.main?.temp) }°C</p>
+        //   <button >Add to Favorites</button>))
+        //   */}
       </div>
-      </FavoriteContext.Provider>
     )
 }
 
